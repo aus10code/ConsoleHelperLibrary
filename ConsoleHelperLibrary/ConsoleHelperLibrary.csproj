@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>austen.ConsoleHelperLibrary</PackageId>
+        <Title>Austen's Console Helper Library</Title>
+        <Authors>Austen Elam</Authors>
+        <Description>Assists the user with working in console applications.</Description>
+        <Copyright>2022</Copyright>
+        <PackageLicenseUrl>MIT</PackageLicenseUrl>
+        <PackageTags>Console ConsoleHelper Austen Elam aus10 helpers</PackageTags>
+        <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+        <PackageVersion>1.0.3</PackageVersion>
+    </PropertyGroup>
+
+</Project>
