@@ -12,8 +12,13 @@
         <Copyright>2022</Copyright>
         <PackageLicenseUrl>MIT</PackageLicenseUrl>
         <PackageTags>Console ConsoleHelper Austen Elam aus10 helpers</PackageTags>
-        <PackageReleaseNotes>Initial release</PackageReleaseNotes>
-        <PackageVersion>1.0.3</PackageVersion>
+        <PackageReleaseNotes>updated readme location</PackageReleaseNotes>
+        <PackageVersion>1.0.4</PackageVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
