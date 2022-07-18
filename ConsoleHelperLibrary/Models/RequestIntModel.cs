@@ -1,157 +1,127 @@
 ﻿namespace ConsoleHelperLibrary.Models;
 
-public class RequestIntModel
+public class RequestIntModel : RequestTypeModel
 {
-    internal HashSet<string> ErrorMessages { get; set; } = new HashSet<string>();
+    internal Dictionary<Enums.IntCheck, bool> ErrorMessagesStatus { get; set; } =
+        new Dictionary<Enums.IntCheck, bool>();
 
-    internal string RequestMessage { get; set; }
-
-    public int Value { get; set; }
+    public int UserInputValue { get; set; }
     private int MinValue { get; set; } = int.MinValue;
     private int MaxValue { get; set; } = int.MaxValue;
-
-    internal bool CheckMinValue { get; set; }
-    internal bool CheckMaxValue { get; set; }
-    internal bool CheckOnlyPositive { get; set; }
-    internal bool CheckOnlyNegative { get; set; }
 
 
     public RequestIntModel WithMinValueOf(int minValue)
     {
-        this.MinValue = minValue;
-        this.CheckMinValue = true;
+        MinValue = minValue;
 
-        this.ErrorMessages.Add($"must be {MinValue} or greater");
+        ErrorMessages.Add($"{MinValue} or greater");
+        ErrorMessagesStatus.Add(Enums.IntCheck.Min, false);
 
         return this;
     }
 
     public RequestIntModel WithMaxValueOf(int maxValue)
     {
-        this.MaxValue = maxValue;
-        this.CheckMaxValue = true;
+        MaxValue = maxValue;
 
-        this.ErrorMessages.Add($"Number must be {MaxValue} or less");
+        ErrorMessages.Add($"{MaxValue} or less");
+        ErrorMessagesStatus.Add(Enums.IntCheck.Max, false);
 
         return this;
     }
 
     public RequestIntModel WithOnlyPositives()
     {
-        this.CheckOnlyPositive = true;
-
-        this.ErrorMessages.Add("Only positive numbers allowed");
+        ErrorMessages.Add("positive");
+        ErrorMessagesStatus.Add(Enums.IntCheck.Positive, false);
 
         return this;
     }
 
     public RequestIntModel WithOnlyNegatives()
     {
-        this.CheckOnlyNegative = true;
-
-        this.ErrorMessages.Add("Only negative numbers allowed");
+        ErrorMessages.Add("negative");
+        ErrorMessagesStatus.Add(Enums.IntCheck.Negative, false);
 
         return this;
     }
 
     public int Close()
     {
+        var errorsFound = false;
+
         do
         {
             //Check if it's a number
-            var userInput = RequestMessage.RequestStringFromConsole();
-            var errorCount = 0;
-
-            bool isValidInt = int.TryParse(userInput, out var validInt);
-
-            var errorMessage = $"Value entered must be a number";
-
-
+            var userInputString = RequestMessage.RequestStringFromConsole();
+            bool isValidInt = int.TryParse(userInputString.UserInputValue, out int validInt);
 
             if (isValidInt)
             {
-                Value = validInt;
-                ErrorMessages.RemoveWhere(t => t.Equals(errorMessage, StringComparison.Ordinal));
-
-                // maybe show which rule it failed, and which it passed
-                // https://stackoverflow.com/questions/22131975/how-to-highlight-and-select-console-text-in-c-sharp-console
+                this.UserInputValue = validInt;
+                ErrorMessagesStatus[Enums.IntCheck.MustBeNumber] = false;
             }
             else
             {
-                ErrorMessages.Add(errorMessage);
+                ErrorMessagesStatus[Enums.IntCheck.MustBeNumber] = true;
             }
 
-
-            //WithMinValueOf
-            if (isValidInt && CheckMinValue)
+            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Min))
             {
-                errorMessage = $"Number must be {MinValue} or greater";
-
-                if (Value >= MinValue)
+                if (this.UserInputValue >= MinValue)
                 {
-                    ErrorMessages.RemoveWhere(t => t.Equals(errorMessage, StringComparison.Ordinal));
+                    ErrorMessagesStatus[Enums.IntCheck.Min] = false;
                 }
                 else
                 {
-                    ErrorMessages.Add(errorMessage);
+                    ErrorMessagesStatus[Enums.IntCheck.Min] = true;
                 }
             }
 
-            //WithMaxValueOf
-            if (isValidInt && CheckMaxValue)
+            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Max))
             {
-                errorMessage = $"Number must be {MaxValue} or less";
-
-                if (Value <= MaxValue)
+                if (UserInputValue <= MaxValue)
                 {
-                    ErrorMessages.RemoveWhere(t => t.Equals(errorMessage, StringComparison.Ordinal));
+                    ErrorMessagesStatus[Enums.IntCheck.Max] = false;
                 }
                 else
                 {
-                    ErrorMessages.Add(errorMessage);
+                    ErrorMessagesStatus[Enums.IntCheck.Max] = true;
                 }
             }
 
-            //WithOnlyPositives
-            if (isValidInt && CheckOnlyPositive)
+            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Positive))
             {
-                errorMessage = $"Only positive numbers allowed";
-
-                if (Value >= 0)
+                if (UserInputValue >= 0)
                 {
-                    ErrorMessages.RemoveWhere(t => t.Equals(errorMessage, StringComparison.Ordinal));
+                    ErrorMessagesStatus[Enums.IntCheck.Positive] = false;
                 }
                 else
                 {
-                    ErrorMessages.Add(errorMessage);
+                    ErrorMessagesStatus[Enums.IntCheck.Positive] = true;
                 }
             }
 
-            //WithOnlyNegatives
-            if (isValidInt && CheckOnlyNegative)
+            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Negative))
             {
-                errorMessage = $"Only negative numbers allowed";
-
-                if (Value < 0)
+                if (UserInputValue < 0)
                 {
-                    ErrorMessages.RemoveWhere(t => t.Equals(errorMessage, StringComparison.Ordinal));
+                    ErrorMessagesStatus[Enums.IntCheck.Negative] = false;
                 }
                 else
                 {
-                    ErrorMessages.Add(errorMessage);
+                    ErrorMessagesStatus[Enums.IntCheck.Negative] = true;
                 }
             }
 
-            if (ErrorMessages.Count > 0)
-            {
-                foreach (var message in ErrorMessages)
-                {
-                    Console.WriteLine(message);
-                }
-            }
-        } while (ErrorMessages.Count > 0);
+            errorsFound = ErrorMessagesStatus.Any(t => t.Value == true);
+
+            PrintErrorsToConsole(errorsFound, ErrorMessages, ErrorMessagesStatus);
+        } while (errorsFound);
 
 
-        return this.Value;
+        return this.UserInputValue;
     }
+
+
 }
