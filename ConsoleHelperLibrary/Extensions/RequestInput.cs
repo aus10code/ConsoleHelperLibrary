@@ -4,13 +4,15 @@ using Models;
 
 public static class RequestInput
 {
+    public static string GetUserInput(this string messageToUser)
+    {
+        Console.Write(messageToUser);
+        return Console.ReadLine();
+    }
     public static RequestStringModel RequestStringFromConsole(this string messageToUser)
     {
         var stringModel = new RequestStringModel();
         stringModel.RequestMessage = messageToUser;
-
-        Console.Write(stringModel.RequestMessage);
-        stringModel.UserInputValue = Console.ReadLine();
 
         return stringModel;
     }

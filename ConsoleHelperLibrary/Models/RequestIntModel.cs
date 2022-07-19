@@ -53,12 +53,13 @@ public class RequestIntModel : RequestTypeModel
         do
         {
             //Check if it's a number
-            var userInputString = RequestMessage.RequestStringFromConsole();
-            bool isValidInt = int.TryParse(userInputString.UserInputValue, out int validInt);
+            var userInputString = RequestMessage.GetUserInput();
+            bool isNumber = int.TryParse(userInputString, out int number);
 
-            if (isValidInt)
+
+            if (isNumber)
             {
-                this.UserInputValue = validInt;
+                this.UserInputValue = number;
                 ErrorMessagesStatus[Enums.IntCheck.MustBeNumber] = false;
             }
             else
@@ -66,7 +67,7 @@ public class RequestIntModel : RequestTypeModel
                 ErrorMessagesStatus[Enums.IntCheck.MustBeNumber] = true;
             }
 
-            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Min))
+            if (isNumber && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Min))
             {
                 if (this.UserInputValue >= MinValue)
                 {
@@ -78,9 +79,11 @@ public class RequestIntModel : RequestTypeModel
                 }
             }
 
-            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Max))
+            if (isNumber && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Max))
             {
-                if (UserInputValue <= MaxValue)
+                var isLessThanOrEqualToMaxValue = UserInputValue.CompareTo(MaxValue) <= 0 ? true : false;
+
+                if (isLessThanOrEqualToMaxValue)
                 {
                     ErrorMessagesStatus[Enums.IntCheck.Max] = false;
                 }
@@ -90,7 +93,7 @@ public class RequestIntModel : RequestTypeModel
                 }
             }
 
-            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Positive))
+            if (isNumber && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Positive))
             {
                 if (UserInputValue >= 0)
                 {
@@ -102,7 +105,7 @@ public class RequestIntModel : RequestTypeModel
                 }
             }
 
-            if (isValidInt && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Negative))
+            if (isNumber && ErrorMessagesStatus.ContainsKey(Enums.IntCheck.Negative))
             {
                 if (UserInputValue < 0)
                 {

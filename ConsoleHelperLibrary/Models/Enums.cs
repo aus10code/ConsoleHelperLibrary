@@ -2,6 +2,10 @@
 
 public class Enums
 {
+    public enum NumberCheck
+    {
+        MustBeNumber, Min, Max, Positive, Negative
+    }
     public enum IntCheck
     {
         MustBeNumber, Min, Max, Positive, Negative
@@ -9,7 +13,7 @@ public class Enums
 
     public enum StringCheck
     {
-        MinLength, MaxLength
+        MinLength, MaxLength, NoSpaces, NoSpecialCharacters
     }
 
     public enum DoulbeCheck
