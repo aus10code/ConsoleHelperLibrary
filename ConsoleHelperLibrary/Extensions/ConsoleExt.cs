@@ -26,4 +26,10 @@ public static class ConsoleExt
             (Console.ForegroundColor, Console.BackgroundColor) = (Console.BackgroundColor, Console.ForegroundColor);
         }
     }
+
+    public static string GetUserInput(this string messageToUser)
+    {
+        Console.Write(messageToUser);
+        return Console.ReadLine();
+    }
 }

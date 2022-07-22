@@ -9,8 +9,8 @@ public class RequestNumberModel<T> : RequestTypeModel where T : IComparable
 
     public T UserInputValue { get; set; }
 
-    internal T? MinValue { get; set; }
-    internal T? MaxValue { get; set; }
+    internal T? MinValue { get; set; } //= (T)(object)int.MaxValue;
+    internal T? MaxValue { get; set; } //= typeof(T).MaxValue<T>();
 
 
     public RequestNumberModel<T> WithMinValueOf(T minValue)
@@ -85,6 +85,7 @@ public class RequestNumberModel<T> : RequestTypeModel where T : IComparable
 
     public void SetErrorMessagesIfNumber<T>(bool isNumber, T number)
     {
+        // allows for comparison for positives/negatives of different types.
         var ZeroOfTypeT = 0.ConvertTo<T>();
 
         if (isNumber && this.ErrorMessagesStatus.ContainsKey(Enums.NumberCheck.Min))
@@ -114,20 +115,36 @@ public class RequestNumberModel<T> : RequestTypeModel where T : IComparable
         bool isNumber;
         T number = default(T);
 
-        if (typeof(T) == typeof(int))
+        try
         {
-            isNumber = int.TryParse(userInputString, out var num);
-            number = num.ConvertTo<T>();
+            number = userInputString.ConvertTo<T>();
+            isNumber = true;
         }
-        else if (typeof(T) == typeof(double))
-        {
-            isNumber = double.TryParse(userInputString, out var num);
-            number = num.ConvertTo<T>();
-        }
-        else
+        catch
         {
             isNumber = false;
         }
+
+        // if (typeof(T) == typeof(int))
+        // {
+        //     isNumber = int.TryParse(userInputString, out var num);
+        //     var a = (T)Convert.ChangeType(userInputString, typeof(T), CultureInfo.InvariantCulture);
+        //     number = num.ConvertTo<T>();
+        // }
+        // else if (typeof(T) == typeof(double))
+        // {
+        //     isNumber = double.TryParse(userInputString, out var num);
+        //     number = num.ConvertTo<T>();
+        // }
+        // else if (typeof(T) == typeof(decimal))
+        // {
+        //     isNumber = decimal.TryParse(userInputString, out var num);
+        //     number = num.ConvertTo<T>();
+        // }
+        // else
+        // {
+        //     isNumber = false;
+        // }
 
         return (isNumber, number);
     }

@@ -16,23 +16,31 @@ public static class Conversions
         }
         else
         {
-            try
+            if (Nullable.GetUnderlyingType(typeof(T)) != null)
             {
-                if (Nullable.GetUnderlyingType(typeof(T)) != null)
-                {
-                    output = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(value)!;
-                }
-                else
-                {
-                    output = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
-                }
+                output = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(value)!;
             }
-            catch (Exception)
+            else
             {
-                output = default(T)!;
+                // likely to throw error. Knowingly letting exception bubble up
+                output = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
             }
         }
 
         return output;
     }
+
+
+    public static T MinValue<T>(this Type self)
+    {
+        return (T)self.GetField(nameof(MinValue)).GetRawConstantValue();
+    }
+
+    public static T MaxValue<T>(this Type self)
+    {
+        return (T)self.GetField(nameof(MaxValue)).GetRawConstantValue();
+    }
+
+
 }
+

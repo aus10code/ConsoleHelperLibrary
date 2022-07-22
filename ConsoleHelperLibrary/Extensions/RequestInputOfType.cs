@@ -4,11 +4,6 @@ using Models;
 
 public static class RequestInput
 {
-    public static string GetUserInput(this string messageToUser)
-    {
-        Console.Write(messageToUser);
-        return Console.ReadLine();
-    }
     public static RequestStringModel RequestStringFromConsole(this string messageToUser)
     {
         var stringModel = new RequestStringModel();
@@ -21,9 +16,6 @@ public static class RequestInput
     {
         var intModel = new RequestNumberModel<int>();
 
-        intModel.MinValue = int.MinValue;
-        intModel.MaxValue = int.MaxValue;
-
         intModel.AddMessagesForNumberType(messageToUser, "Must be a whole number");
 
         return intModel;
@@ -33,12 +25,18 @@ public static class RequestInput
     {
         var doubleModel = new RequestNumberModel<double>();
 
-        doubleModel.MinValue = double.MinValue;
-        doubleModel.MaxValue = double.MaxValue;
-
         doubleModel.AddMessagesForNumberType(messageToUser, "Must be a number");
 
         return doubleModel;
+    }
+
+    public static RequestNumberModel<decimal> RequestDecimalFromConsole(this string messageToUser)
+    {
+        var decimalModel = new RequestNumberModel<decimal>();
+
+        decimalModel.AddMessagesForNumberType(messageToUser, "Must be a number");
+
+        return decimalModel;
     }
 
     public static void AddMessagesForNumberType<T>(this RequestNumberModel<T> model, string messageToUser, string errorMessage) where T : IComparable
