@@ -1,5 +1,8 @@
 ﻿namespace ConsoleHelperLibrary;
 
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using Models;
 
 public static class ConsoleExt
@@ -24,4 +27,3 @@ public static class ConsoleExt
         }
     }
 }
-
