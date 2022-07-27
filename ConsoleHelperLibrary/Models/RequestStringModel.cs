@@ -84,14 +84,14 @@ public class RequestStringModel : RequestTypeModel
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.NoSpecialCharacters))
             {
-                var regex = new Regex(@"^[ A-Za-z0-9]$");
+                var regex = new Regex(@"[^ A-Za-z\d]");
 
-                ErrorMessagesStatus[Enums.StringCheck.NoSpecialCharacters] = !(regex.IsMatch(UserInputValue));
+                ErrorMessagesStatus[Enums.StringCheck.NoSpecialCharacters] = (regex.IsMatch(UserInputValue));
             }
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.NoNumbers))
             {
-                var regex = new Regex(@"0-9");
+                var regex = new Regex(@"\d");
 
                 ErrorMessagesStatus[Enums.StringCheck.NoNumbers] = (regex.IsMatch(UserInputValue));
             }

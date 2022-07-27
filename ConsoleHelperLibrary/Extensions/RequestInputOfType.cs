@@ -28,6 +28,13 @@ public static class RequestInput
         return numberModel;
     }
 
+    public static RequestBoolModel RequestBoolFromConsole(this string messageToUser)
+    {
+        var boolModel = new RequestBoolModel();
+
+        return boolModel;
+    }
+
     private static void CheckForUnsupportedTypes<T>()
     {
         if (typeof(T) == typeof(string) || typeof(T) == typeof(DateTime) || typeof(T) == typeof(DBNull) || typeof(T) == typeof(bool))
