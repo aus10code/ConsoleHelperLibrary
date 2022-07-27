@@ -1,5 +1,7 @@
 ﻿namespace ConsoleHelperLibrary.Models;
 
+using System.Text.RegularExpressions;
+
 public class RequestStringModel : RequestTypeModel
 {
     public string UserInputValue { get; set; }
@@ -7,14 +9,13 @@ public class RequestStringModel : RequestTypeModel
     public int MinLength { get; set; }
     public int MaxLength { get; set; }
 
-    internal Dictionary<Enums.StringCheck, bool> ErrorMessagesStatus { get; set; } =
-        new Dictionary<Enums.StringCheck, bool>();
+    internal Dictionary<Enums.StringCheck, bool> ErrorMessagesStatus { get; set; } = new();
 
     public RequestStringModel WithMinLengthOf(int minStringLength)
     {
         MinLength = minStringLength;
 
-        ErrorMessages.Add($"{MinLength} characters long or more");
+        ErrorMessages.Add($"{MinLength} characters or more");
         ErrorMessagesStatus.Add(Enums.StringCheck.MinLength, false);
 
         return this;
@@ -24,8 +25,8 @@ public class RequestStringModel : RequestTypeModel
     {
         MaxLength = maxStringLength;
 
-        ErrorMessages.Add($"{MaxLength} characters long or less");
-        ErrorMessagesStatus.Add(Enums.StringCheck.MinLength, false);
+        ErrorMessages.Add($"{MaxLength} characters or less");
+        ErrorMessagesStatus.Add(Enums.StringCheck.MaxLength, false);
 
         return this;
     }
@@ -46,6 +47,14 @@ public class RequestStringModel : RequestTypeModel
         return this;
     }
 
+    public RequestStringModel WithNoNumbers()
+    {
+        ErrorMessages.Add("no numbers");
+        ErrorMessagesStatus.Add(Enums.StringCheck.NoNumbers, false);
+
+        return this;
+    }
+
     public string Close()
     {
         var errorsFound = false;
@@ -53,56 +62,38 @@ public class RequestStringModel : RequestTypeModel
         do
         {
             //Check if it's a number
-            UserInputValue = RequestMessage.GetUserInput();
+            UserInputValue = RequestMessage.GetUserInput().Trim();
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.MinLength))
             {
-                if (UserInputValue.Length >= MinLength)
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.MinLength] = false;
-                }
-                else
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.MaxLength] = true;
-                }
+                ErrorMessagesStatus[Enums.StringCheck.MinLength] = (UserInputValue.Length < MinLength);
+
             }
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.MaxLength))
             {
-                if (UserInputValue.Length <= MaxLength)
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.MaxLength] = false;
-                }
-                else
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.MaxLength] = true;
-                }
+                ErrorMessagesStatus[Enums.StringCheck.MaxLength] = (UserInputValue.Length > MaxLength);
             }
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.NoSpaces))
             {
-                // Must contain no spaces
+                var regex = new Regex(@"\s");
 
-                if (true)
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.NoSpaces] = false;
-                }
-                else
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.NoSpaces] = true;
-                }
+                ErrorMessagesStatus[Enums.StringCheck.NoSpaces] = (regex.IsMatch(UserInputValue));
             }
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.NoSpecialCharacters))
             {
-                if (true)
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.NoSpecialCharacters] = false;
-                }
-                else
-                {
-                    ErrorMessagesStatus[Enums.StringCheck.NoSpecialCharacters] = true;
-                }
+                var regex = new Regex(@"^[ A-Za-z0-9]$");
+
+                ErrorMessagesStatus[Enums.StringCheck.NoSpecialCharacters] = !(regex.IsMatch(UserInputValue));
+            }
+
+            if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.NoNumbers))
+            {
+                var regex = new Regex(@"0-9");
+
+                ErrorMessagesStatus[Enums.StringCheck.NoNumbers] = (regex.IsMatch(UserInputValue));
             }
 
             errorsFound = ErrorMessagesStatus.Any(t => t.Value == true);

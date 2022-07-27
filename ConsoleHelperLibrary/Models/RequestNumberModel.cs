@@ -3,7 +3,7 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-public class RequestNumberModel<T> : RequestTypeModel where T : IComparable
+public class RequestNumberModel<T> : RequestTypeModel where T : IConvertible, IComparable
 {
     internal Dictionary<Enums.NumberCheck, bool> ErrorMessagesStatus { get; set; } = new();
 
@@ -124,27 +124,6 @@ public class RequestNumberModel<T> : RequestTypeModel where T : IComparable
         {
             isNumber = false;
         }
-
-        // if (typeof(T) == typeof(int))
-        // {
-        //     isNumber = int.TryParse(userInputString, out var num);
-        //     var a = (T)Convert.ChangeType(userInputString, typeof(T), CultureInfo.InvariantCulture);
-        //     number = num.ConvertTo<T>();
-        // }
-        // else if (typeof(T) == typeof(double))
-        // {
-        //     isNumber = double.TryParse(userInputString, out var num);
-        //     number = num.ConvertTo<T>();
-        // }
-        // else if (typeof(T) == typeof(decimal))
-        // {
-        //     isNumber = decimal.TryParse(userInputString, out var num);
-        //     number = num.ConvertTo<T>();
-        // }
-        // else
-        // {
-        //     isNumber = false;
-        // }
 
         return (isNumber, number);
     }

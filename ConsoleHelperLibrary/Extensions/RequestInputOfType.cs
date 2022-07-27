@@ -1,5 +1,6 @@
 ﻿namespace ConsoleHelperLibrary;
 
+using System.Runtime.CompilerServices;
 using Models;
 
 public static class RequestInput
@@ -7,39 +8,35 @@ public static class RequestInput
     public static RequestStringModel RequestStringFromConsole(this string messageToUser)
     {
         var stringModel = new RequestStringModel();
+
         stringModel.RequestMessage = messageToUser;
+        stringModel.ErrorMessages.Add($"Must be text");
+        stringModel.ErrorMessagesStatus.Add(Enums.StringCheck.Text, false);
 
         return stringModel;
     }
 
-    public static RequestNumberModel<int> RequestIntFromConsole(this string messageToUser)
+    public static RequestNumberModel<T> RequestNumberFromConsole<T>(this string messageToUser) where T : IConvertible, IComparable
     {
-        var intModel = new RequestNumberModel<int>();
+        var numberModel = new RequestNumberModel<T>();
+        var errorMessage = "Must be a number";
 
-        intModel.AddMessagesForNumberType(messageToUser, "Must be a whole number");
+        CheckForUnsupportedTypes<T>();
 
-        return intModel;
+        numberModel.AddMessagesForNumberType(messageToUser, errorMessage);
+
+        return numberModel;
     }
 
-    public static RequestNumberModel<double> RequestDoubleFromConsole(this string messageToUser)
+    private static void CheckForUnsupportedTypes<T>()
     {
-        var doubleModel = new RequestNumberModel<double>();
-
-        doubleModel.AddMessagesForNumberType(messageToUser, "Must be a number");
-
-        return doubleModel;
+        if (typeof(T) == typeof(string) || typeof(T) == typeof(DateTime) || typeof(T) == typeof(DBNull) || typeof(T) == typeof(bool))
+        {
+            throw new TypeAccessException("Please use a number type with RequestNumberFromConsole<T>");
+        }
     }
 
-    public static RequestNumberModel<decimal> RequestDecimalFromConsole(this string messageToUser)
-    {
-        var decimalModel = new RequestNumberModel<decimal>();
-
-        decimalModel.AddMessagesForNumberType(messageToUser, "Must be a number");
-
-        return decimalModel;
-    }
-
-    public static void AddMessagesForNumberType<T>(this RequestNumberModel<T> model, string messageToUser, string errorMessage) where T : IComparable
+    public static void AddMessagesForNumberType<T>(this RequestNumberModel<T> model, string messageToUser, string errorMessage) where T : IConvertible, IComparable
     {
         model.RequestMessage = messageToUser;
 
