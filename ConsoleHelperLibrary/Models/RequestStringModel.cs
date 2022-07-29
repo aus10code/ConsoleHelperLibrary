@@ -61,7 +61,6 @@ public class RequestStringModel : RequestTypeModel
 
         do
         {
-            //Check if it's a number
             UserInputValue = RequestMessage.GetUserInput().Trim();
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.MinLength))

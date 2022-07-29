@@ -1,6 +1,7 @@
 ﻿namespace ConsoleHelperLibrary;
 
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using Models;
 
 public static class RequestInput
@@ -23,7 +24,9 @@ public static class RequestInput
 
         CheckForUnsupportedTypes<T>();
 
-        numberModel.AddMessagesForNumberType(messageToUser, errorMessage);
+        numberModel.RequestMessage = messageToUser;
+        numberModel.ErrorMessages.Add(errorMessage);
+        numberModel.ErrorMessagesStatus.Add(Enums.NumberCheck.MustBeNumber, false);
 
         return numberModel;
     }
@@ -31,6 +34,10 @@ public static class RequestInput
     public static RequestBoolModel RequestBoolFromConsole(this string messageToUser)
     {
         var boolModel = new RequestBoolModel();
+
+        boolModel.RequestMessage = messageToUser;
+        boolModel.ErrorMessages.Add("Must be yes or no");
+        boolModel.ErrorMessagesStatus.Add(Enums.BoolCheck.IsBool, false);
 
         return boolModel;
     }
@@ -41,14 +48,6 @@ public static class RequestInput
         {
             throw new TypeAccessException("Please use a number type with RequestNumberFromConsole<T>");
         }
-    }
-
-    public static void AddMessagesForNumberType<T>(this RequestNumberModel<T> model, string messageToUser, string errorMessage) where T : IConvertible, IComparable
-    {
-        model.RequestMessage = messageToUser;
-
-        model.ErrorMessages.Add(errorMessage);
-        model.ErrorMessagesStatus.Add(Enums.NumberCheck.MustBeNumber, false);
     }
 }
 
