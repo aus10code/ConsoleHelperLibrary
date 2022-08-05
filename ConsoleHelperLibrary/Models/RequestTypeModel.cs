@@ -17,7 +17,8 @@ public class RequestTypeModel
                 }
                 else if (i == 1)
                 {
-                    Console.Write(" that is ");
+                    Console.Write(typeof(T) == typeof(Enums.StringCheck) ? " that contains " : " that is ");
+
                     ConsoleExt.WriteToConsole($"{errorMessages[i]}", errorMessagesStatus.ElementAt(i).Value);
                 }
                 else if (i < errorMessages.Count - 1)
