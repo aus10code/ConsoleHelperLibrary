@@ -1,5 +1,7 @@
 # ConsoleLibraryHelper
+<p align="center">
 [![](https://img.shields.io/nuget/v/austen.ConsoleHelperLibrary)](https://www.nuget.org/packages/austen.ConsoleHelperLibrary/)[![](https://img.shields.io/nuget/dt/austen.ConsoleHelperLibrary)](https://www.nuget.org/packages/austen.ConsoleHelperLibrary/)[![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/aus10code/ConsoleHelperLibrary)[![](https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary)](https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary)
+</p>
 ConsoleLibraryHelper simplifies the capture of string, boolean, and number types from console users.
 
 To use this library, add the "using ConsoleHelperLibrary" statement
