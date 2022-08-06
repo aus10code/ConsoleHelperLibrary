@@ -12,8 +12,8 @@
         <Copyright>2022</Copyright>
         <PackageLicenseUrl>MIT</PackageLicenseUrl>
         <PackageTags>Console ConsoleHelper Austen Elam aus10 helpers</PackageTags>
-        <PackageReleaseNotes>updated image location as github.com wasn't allowed</PackageReleaseNotes>
-        <PackageVersion>1.0.12</PackageVersion>
+        <PackageReleaseNotes>Readme update</PackageReleaseNotes>
+        <PackageVersion>1.0.13</PackageVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
