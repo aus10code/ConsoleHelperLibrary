@@ -1,7 +1,18 @@
-# ConsoleLibraryHelper
+<h1 align="center">
+    ConsoleLibraryHelper
+</h1>
+
 <p align="center">
-[![](https://img.shields.io/nuget/v/austen.ConsoleHelperLibrary)](https://www.nuget.org/packages/austen.ConsoleHelperLibrary/)[![](https://img.shields.io/nuget/dt/austen.ConsoleHelperLibrary)](https://www.nuget.org/packages/austen.ConsoleHelperLibrary/)[![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/aus10code/ConsoleHelperLibrary)[![](https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary)](https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary)
+	<a href="https://www.nuget.org/packages/austen.ConsoleHelperLibrary/" alt="">
+	        <img src="https://img.shields.io/nuget/v/austen.ConsoleHelperLibrary" /></a>
+	<a href="https://www.nuget.org/packages/austen.ConsoleHelperLibrary/" alt="">
+	        <img src="https://img.shields.io/nuget/dt/austen.ConsoleHelperLibrary" /></a>
+	<a href="https://badgen.net/badge/icon/github?icon=github&label" alt="">
+	        <img src="https://badgen.net/badge/icon/github?icon=github&label" /></a>
+	<a href="https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary" alt="">
+	        <img src="https://img.shields.io/github/license/aus10code/ConsoleHelperLibrary" /></a>
 </p>
+
 ConsoleLibraryHelper simplifies the capture of string, boolean, and number types from console users.
 
 To use this library, add the "using ConsoleHelperLibrary" statement
