@@ -6,4 +6,4 @@ Available Extension Methods:
 
 string.RequestString()
 
-![](https://github.com/aus10code/ConsoleHelperLibrary/blob/main/images/RequestNumberFromConsole.gif?raw=true)
+![](https://raw.githubusercontent.com/aus10code/ConsoleHelperLibrary/main/images/RequestNumberFromConsole.gif)
