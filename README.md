@@ -2,20 +2,28 @@
 
 ConsoleLibraryHelper was designed to simplify data requests from users in console applications
 
-To use this library, add a using ConsoleHelperLibrary
+To use this library, add the "using ConsoleHelperLibrary" statement
 
 Available Extension Methods:
 
 RequestBoolFromConsole
 RequestStringFromConsole
-RequestNumberFromConsole
+RequestNumberFromConsole<T>
 
 ## How To Use
 
-All methods extend the string class. In order to request data using ConsoleHelperLibrary you must extend a string like below
+All methods extend the string class. In order to request data using ConsoleHelperLibrary you must extend a string and end with a .Close() statement like below
+```csharp
+"What is your age: ".RequestNumberFromConsole<int>.Close();
 ```
-"What is your age".RequestNumberFromConsole<int>.Close();
 ```
+"Are you over 18: ".RequestBoolFromConsole().Close();
+```
+```
+"What is your name: ".RequestStringFromConsole().Close();
+```
+
+
 ## Examples
 Request number from console that is
 - An integer
