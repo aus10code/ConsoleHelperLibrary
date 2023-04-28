@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 public class RequestStringModel : RequestTypeModel
 {
     public string UserInputValue { get; set; }
-
     public int MinLength { get; set; }
     public int MaxLength { get; set; }
+    public List<string> Options { get; set; } = new();
 
     internal Dictionary<Enums.StringCheck, bool> ErrorMessagesStatus { get; set; } = new();
 
@@ -55,6 +55,38 @@ public class RequestStringModel : RequestTypeModel
         return this;
     }
 
+    public RequestStringModel WithOnlyTheseOptions(List<string> options)
+    {
+        Options = options;
+
+        string errorMessage = options.Count > 1 ? "one of these options: " : "this option: ";
+
+        for (int i = 0; i < options.Count; i++)
+        {
+            if (options.Count == 2)
+            {
+                errorMessage += $"{options[0]} or {options[1]}, ";
+                break;
+            }
+
+            if (i == options.Count - 1 && options.Count >= 3)
+            {
+                errorMessage = errorMessage.Remove(errorMessage.Length - 2);
+                errorMessage += $" or {options[i]}, ";
+                break;
+            }
+
+            errorMessage += $"{options[i]}, ";
+        }
+
+        errorMessage = errorMessage.Remove(errorMessage.Length - 2);
+
+        ErrorMessages.Add(errorMessage);
+        ErrorMessagesStatus.Add(Enums.StringCheck.OnlyTheseOptions, false);
+
+        return this;
+    }
+
     public string Close()
     {
         var errorsFound = false;
@@ -66,7 +98,6 @@ public class RequestStringModel : RequestTypeModel
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.MinLength))
             {
                 ErrorMessagesStatus[Enums.StringCheck.MinLength] = (UserInputValue.Length < MinLength);
-
             }
 
             if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.MaxLength))
@@ -93,6 +124,13 @@ public class RequestStringModel : RequestTypeModel
                 var regex = new Regex(@"\d");
 
                 ErrorMessagesStatus[Enums.StringCheck.NoNumbers] = (regex.IsMatch(UserInputValue));
+            }
+
+            if (ErrorMessagesStatus.ContainsKey(Enums.StringCheck.OnlyTheseOptions))
+            {
+                var missingOption = !Options.Contains(UserInputValue, StringComparer.InvariantCultureIgnoreCase);
+
+                ErrorMessagesStatus[Enums.StringCheck.OnlyTheseOptions] = missingOption;
             }
 
             errorsFound = ErrorMessagesStatus.Any(t => t.Value == true);

@@ -8,7 +8,7 @@ public class Enums
     }
     public enum StringCheck
     {
-        Text, MinLength, MaxLength, NoSpaces, NoSpecialCharacters, NoNumbers
+        Text, MinLength, MaxLength, NoSpaces, NoSpecialCharacters, NoNumbers, OnlyTheseOptions
     }
 
     public enum BoolCheck
