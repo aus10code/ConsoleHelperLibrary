@@ -14,9 +14,8 @@ https://github.com/aus10code/ConsoleHelperLibrary</Description>
         <Copyright>2023</Copyright>
         <PackageLicenseUrl>MIT</PackageLicenseUrl>
         <PackageTags>Console ConsoleHelper Austen Elam aus10 helpers</PackageTags>
-        <PackageReleaseNotes>added new functionality
-RequestStringFromConsole.WithOnlyTheseOptions(List&lt;string&gt;)</PackageReleaseNotes>
-        <PackageVersion>1.0.14</PackageVersion>
+        <PackageReleaseNotes>Updated to net7.0</PackageReleaseNotes>
+        <PackageVersion>1.0.15</PackageVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
