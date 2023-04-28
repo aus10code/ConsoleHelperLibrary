@@ -1,3 +1,5 @@
 *.idea
 ConsoleHelperLibrary/bin
 ConsoleHelperLibrary/obj
+ConsoleHelperLibrary.Tests/bin
+ConsoleHelperLibrary.Tests/obj
