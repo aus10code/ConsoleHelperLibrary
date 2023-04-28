@@ -8,12 +8,15 @@
         <PackageId>austen.ConsoleHelperLibrary</PackageId>
         <Title>Austen's Console Helper Library</Title>
         <Authors>Austen Elam</Authors>
-        <Description>Assists the user with working in console applications.</Description>
-        <Copyright>2022</Copyright>
+        <Description>Aids in retrieval of user input from the console.
+
+https://github.com/aus10code/ConsoleHelperLibrary</Description>
+        <Copyright>2023</Copyright>
         <PackageLicenseUrl>MIT</PackageLicenseUrl>
         <PackageTags>Console ConsoleHelper Austen Elam aus10 helpers</PackageTags>
-        <PackageReleaseNotes>Readme update</PackageReleaseNotes>
-        <PackageVersion>1.0.13</PackageVersion>
+        <PackageReleaseNotes>added new functionality
+RequestStringFromConsole.WithOnlyTheseOptions(List&lt;string&gt;)</PackageReleaseNotes>
+        <PackageVersion>1.0.14</PackageVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 

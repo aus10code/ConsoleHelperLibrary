@@ -34,6 +34,7 @@ RequestStringFromConsole
 - `WithNoSpaces()`
 - `WithNoSpecialCharacters()`
 - `WithNoNumbers()`
+- `WithOnlyTheseOptions(List<string> options)`
 
 
 ### Number
